@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.AddTaskActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/task_title" />
+
+        <EditText
+            android:id="@+id/enter_task_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/message"
+            android:singleLine="true"
+            android:hint="@string/enter_task_title"
+            tools:hint="@string/enter_task_title" />
+
+        <TextView
+            android:id="@+id/description_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/enter_task_title"
+            android:layout_marginTop="16dp"
+            android:text="@string/task_description" />
+
+        <EditText
+            android:id="@+id/task_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description_label"
+            android:singleLine="true"
+            android:hint="@string/enter_task_description"
+            tools:hint="@string/enter_task_description" />
+
+
+        <TextView
+            android:id="@+id/task_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/task_priority"
+            android:layout_below="@id/task_description"/>
+
+        <RadioGroup
+            android:id="@+id/priority_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkedButton="@id/low_priority_radio"
+            android:layout_below="@id/task_priority">
+
+            <RadioButton
+                android:id="@+id/low_priority_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/low_priority"/>
+
+            <RadioButton
+                android:id="@+id/medium_priority_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/medium_priority"/>
+
+            <RadioButton
+                android:id="@+id/high_priority_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/high_priority"/>
+        </RadioGroup>
+
+        <View
+            android:id="@+id/priority_color"
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:background="@color/low_priority"
+            android:layout_below="@id/task_priority"
+            android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@id/priority_group" />
+    </RelativeLayout>
+
+</RelativeLayout>
