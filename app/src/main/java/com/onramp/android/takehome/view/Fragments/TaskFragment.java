@@ -125,10 +125,6 @@ public class TaskFragment extends Fragment {
         }
     }
 
-    public void deleteAllTasks(){
-        taskViewModel.deleteAll();
-    }
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -144,7 +140,7 @@ public class TaskFragment extends Fragment {
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
-        mAdapter = new TaskAdapter(mListener);
+        mAdapter = new TaskAdapter(getContext(),mListener);
         recyclerView.setAdapter(mAdapter);
     }
 

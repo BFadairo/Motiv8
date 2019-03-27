@@ -94,7 +94,7 @@ public class TaskRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            taskDao.deletaAllTasks();
+            taskDao.deleteAllTasks();
             return null;
         }
     }

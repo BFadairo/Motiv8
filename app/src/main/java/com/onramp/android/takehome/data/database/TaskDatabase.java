@@ -1,13 +1,17 @@
 package com.onramp.android.takehome.data.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+
 import android.content.Context;
 
 import com.onramp.android.takehome.model.Task;
 
-@Database(entities = {Task.class}, version = 1, exportSchema = false)
+@Database(entities = {Task.class}, version = 2, exportSchema = false)
 public abstract class TaskDatabase extends RoomDatabase {
 
     private static TaskDatabase INSTANCE;
@@ -18,10 +22,19 @@ public abstract class TaskDatabase extends RoomDatabase {
         if (INSTANCE == null){
             INSTANCE =
                     Room.databaseBuilder(context.getApplicationContext(), TaskDatabase.class, DATABASE_NAME)
+                            .fallbackToDestructiveMigration()
                             .build();
         }
         return INSTANCE;
     }
+
+    /*static final Migration MIGRATION_1_2 = new Migration(1,2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE tasks"
+                            + " ADD COLUMN taskTime VARCHAR(255) ");
+        }
+    };*/
 
 
     public static void destroyInstance(){

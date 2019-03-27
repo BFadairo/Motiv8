@@ -5,29 +5,37 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import androidx.annotation.NonNull;
 
-@Entity(tableName = "quotes")
 public class Quote implements Parcelable {
 
-
     /**ID of the quote used for room **/
-    @NonNull
-    @PrimaryKey(autoGenerate = true)
+    @SerializedName("id")
+    @Expose
     private int id;
 
     /**Used to store the quote**/
-    @ColumnInfo(name = "quote")
-    private String quote;
+    @SerializedName("title")
+    @Expose
+    private String title;
 
     /**Used to store the person who said the quote**/
-    @ColumnInfo(name = "speaker")
-    private String speaker;
+    @SerializedName("author")
+    private String author;
 
-    public Quote(int id, String quote, String speaker) {
+    /**String used to store the image link **/
+    @SerializedName("media")
+    private String quoteLink;
+
+    public Quote(int id, String quote, String speaker, String quoteLink) {
         this.id = id;
-        this.quote = quote;
-        this.speaker = speaker;
+        this.title = quote;
+        this.author = speaker;
+        this.quoteLink = quoteLink;
     }
 
     public int getId() {
@@ -38,21 +46,30 @@ public class Quote implements Parcelable {
         this.id = id;
     }
 
-    public String getQuote() {
-        return quote;
+    public String getTitle() {
+        return title;
     }
 
-    public void setQuote(String quote) {
-        this.quote = quote;
+    public void setTitle(String quote) {
+        this.title = quote;
     }
 
-    public String getSpeaker() {
-        return speaker;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setSpeaker(String speaker) {
-        this.speaker = speaker;
+    public void setAuthor(String author) {
+        this.author = author;
     }
+
+    public String getQuoteLink() {
+        return quoteLink;
+    }
+
+    public void setQuoteLink(String quoteLink) {
+        this.quoteLink = quoteLink;
+    }
+
 
     @Override
     public int describeContents() {
@@ -62,14 +79,16 @@ public class Quote implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
-        dest.writeString(this.quote);
-        dest.writeString(this.speaker);
+        dest.writeString(this.title);
+        dest.writeString(this.author);
+        dest.writeString(this.quoteLink);
     }
 
     protected Quote(Parcel in) {
         this.id = in.readInt();
-        this.quote = in.readString();
-        this.speaker = in.readString();
+        this.title = in.readString();
+        this.author = in.readString();
+        this.quoteLink = in.readString();
     }
 
     public static final Creator<Quote> CREATOR = new Creator<Quote>() {

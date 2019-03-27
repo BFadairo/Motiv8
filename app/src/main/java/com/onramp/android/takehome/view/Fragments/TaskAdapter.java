@@ -2,6 +2,7 @@ package com.onramp.android.takehome.view.Fragments;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,11 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     private List<Task> mTasks = new ArrayList<>();
+    private Context mContext;
     private final OnListFragmentInteractionListener mListener;
 
-    public TaskAdapter(OnListFragmentInteractionListener listener) {
+    public TaskAdapter(Context context, OnListFragmentInteractionListener listener) {
+        mContext = context;
         mListener = listener;
     }
 
@@ -39,8 +42,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mTasks.get(position);
-        holder.mIdView.setText(mTasks.get(position).getTitle());
-        holder.mContentView.setText(mTasks.get(position).getDescription());
+        holder.mIdView.setText(holder.mItem.getTitle());
+        holder.mContentView.setText(holder.mItem.getDescription());
+        holder.mPriorityView.setText(holder.mItem.getPriority());
+        holder.mTimeView.setText(holder.mItem.getTime());
+        switch (holder.mItem.getPriority()){
+            case "High": holder.mPriorityView.setTextColor(mContext.getColor(R.color.high_priorty)); break;
+            case "Medium": holder.mPriorityView.setTextColor(mContext.getColor(R.color.medium_priorty)); break;
+            case "Low": holder.mPriorityView.setTextColor(mContext.getColor(R.color.low_priority)); break;
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +78,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
+        public final TextView mPriorityView;
+        public final TextView mTimeView;
         public Task mItem;
 
         public ViewHolder(View view) {
@@ -75,6 +87,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             mView = view;
             mIdView = view.findViewById(R.id.item_number);
             mContentView = view.findViewById(R.id.content);
+            mPriorityView = view.findViewById(R.id.task_priority_level);
+            mTimeView = view.findViewById(R.id.time_view);
         }
 
         @Override

@@ -25,12 +25,17 @@ public class Task implements Parcelable {
 
     /**Used to store the task's priority*/
     @ColumnInfo(name = "priority")
-    private String priorty;
+    private String priority;
 
-    public Task(String title, String description, String priorty) {
+    /**Used to store the time the task is due*/
+    @ColumnInfo(name = "time")
+    private String time;
+
+    public Task(String title, String description, String priority, String time) {
         this.title = title;
         this.description = description;
-        this.priorty = priorty;
+        this.priority = priority;
+        this.time = time;
     }
 
     public int getId() {
@@ -57,12 +62,20 @@ public class Task implements Parcelable {
         this.description = description;
     }
 
-    public String getPriorty() {
-        return priorty;
+    public String getPriority() {
+        return priority;
     }
 
-    public void setPriorty(String priorty) {
-        this.priorty = priorty;
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
 
@@ -76,14 +89,16 @@ public class Task implements Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.title);
         dest.writeString(this.description);
-        dest.writeString(this.priorty);
+        dest.writeString(this.priority);
+        dest.writeString(this.time);
     }
 
     protected Task(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();
         this.description = in.readString();
-        this.priorty = in.readString();
+        this.priority = in.readString();
+        this.time = in.readString();
     }
 
     public static final Creator<Task> CREATOR = new Creator<Task>() {

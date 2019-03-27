@@ -1,6 +1,9 @@
 package com.onramp.android.takehome.view;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
     @BindView(R.id.tabs)
     TabLayout tabLayout;
     private TaskViewModel taskViewModel;
+    private String CHANNEL_ID = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         ButterKnife.bind(this);
+        createNotificationChannel();
         setSupportActionBar(toolbar);
         taskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
         setupViewPager();
@@ -80,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
                 Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(settingsIntent);
             case R.id.action_delete_tasks:
+                taskViewModel.deleteAll();
         }
 
         return super.onOptionsItemSelected(item);
@@ -94,5 +100,21 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
         startActivity(viewTaskActivity);
         Log.v(LOG_TAG, item.getTitle());
         Log.v(LOG_TAG, "Item ID: " + item.getId());
+    }
+
+
+    private void createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.notification_channel);
+            String description = getString(R.string.notification_channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
     }
 }

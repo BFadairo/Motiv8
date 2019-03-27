@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.onramp.android.takehome"
-        minSdkVersion 28
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -28,6 +28,10 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     implementation 'androidx.recyclerview:recyclerview:1.0.0-beta01'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-beta01'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     annotationProcessor 'androidx.room:room-compiler:2.0.0-beta01'
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
