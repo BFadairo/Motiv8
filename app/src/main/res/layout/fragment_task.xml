@@ -11,25 +11,25 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        app:cardElevation="8dp">
+        app:cardElevation="@dimen/card_elevation">
 
         <LinearLayout
-            android:layout_width="250dp"
+            android:layout_width="@dimen/card_linear_layout_width"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/item_number"
-                android:text="Do the Dishes"
+                android:id="@+id/task_title"
+                android:hint="@string/task_hint_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textAppearance="?attr/textAppearanceSearchResultTitle" />
 
             <TextView
-                android:id="@+id/content"
-                android:text="This is where the description is supposed to go, it should expand and not look like crap"
+                android:id="@+id/task_description"
+                android:text="@string/task_hint_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceListItem" />
@@ -48,14 +48,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:textStyle="bold"
-                android:text="Priority Level"/>
+                android:hint="@string/task_priority_hint" />
 
             <TextView
                 android:id="@+id/time_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:text="10:15pm"/>
+                android:hint="@string/task_time_hint" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -1,7 +1,5 @@
 package com.onramp.android.takehome.view.Fragments;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,10 @@ import com.onramp.android.takehome.view.Fragments.dummy.DummyContent.DummyItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -42,8 +44,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mTasks.get(position);
-        holder.mIdView.setText(holder.mItem.getTitle());
-        holder.mContentView.setText(holder.mItem.getDescription());
+        holder.mTitleView.setText(holder.mItem.getTitle());
+        holder.mDescriptionView.setText(holder.mItem.getDescription());
         holder.mPriorityView.setText(holder.mItem.getPriority());
         holder.mTimeView.setText(holder.mItem.getTime());
         switch (holder.mItem.getPriority()){
@@ -75,25 +77,26 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.task_title)
+        TextView mTitleView;
+        @BindView(R.id.task_description)
+        TextView mDescriptionView;
+        @BindView(R.id.task_priority_level)
+        TextView mPriorityView;
+        @BindView(R.id.time_view)
+        TextView mTimeView;
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public final TextView mPriorityView;
-        public final TextView mTimeView;
         public Task mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = view.findViewById(R.id.item_number);
-            mContentView = view.findViewById(R.id.content);
-            mPriorityView = view.findViewById(R.id.task_priority_level);
-            mTimeView = view.findViewById(R.id.time_view);
+            ButterKnife.bind(this, mView);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mDescriptionView.getText() + "'";
         }
     }
 }

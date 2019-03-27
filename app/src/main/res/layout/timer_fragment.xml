@@ -21,28 +21,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <TextView
-            android:id="@+id/hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hours here"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="parent" />
-
-        <TextView
-            android:id="@+id/mins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="mins"
-            app:layout_constraintLeft_toRightOf="@id/hours"
-            app:layout_constraintTop_toBottomOf="@id/time_picker" />
-
         <Button
             android:id="@+id/start_time_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Timer"
+            android:text="@string/start_timer_button"
             app:layout_constraintLeft_toLeftOf="@id/time_picker"
             app:layout_constraintRight_toRightOf="@id/time_picker"
             app:layout_constraintTop_toBottomOf="@id/time_picker" />
@@ -60,8 +43,8 @@
                 android:id="@+id/time_difference_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="00:00"
-                android:textSize="30sp"
+                android:hint="@string/default_time_hint"
+                android:textSize="@dimen/time_text_size"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

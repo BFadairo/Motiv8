@@ -12,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.onramp.android.takehome.R;
 import com.onramp.android.takehome.model.Task;
 import com.onramp.android.takehome.view.AddTaskActivity;
-import com.onramp.android.takehome.view.MainActivity;
 import com.onramp.android.takehome.viewmodel.TaskViewModel;
 
 import java.util.List;
@@ -41,7 +40,7 @@ public class TaskFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-    @BindView(R.id.list)
+    @BindView(R.id.task_list)
     RecyclerView recyclerView;
     @BindView(R.id.fab)
     FloatingActionButton fab;
@@ -134,7 +133,7 @@ public class TaskFragment extends Fragment {
     private void populateUi(View view) {
         // Set the adapter
         Context context = view.getContext();
-        recyclerView = view.findViewById(R.id.list);
+        recyclerView = view.findViewById(R.id.task_list);
         if (mColumnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
         } else {

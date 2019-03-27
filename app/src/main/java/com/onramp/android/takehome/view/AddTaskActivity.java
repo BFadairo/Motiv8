@@ -2,14 +2,6 @@ package com.onramp.android.takehome.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
-import androidx.lifecycle.ViewModelProviders;
-import butterknife.BindView;
-import butterknife.BindViews;
-import butterknife.ButterKnife;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +21,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+import androidx.lifecycle.ViewModelProviders;
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+
 public class AddTaskActivity extends AppCompatActivity {
 
     @BindView(R.id.enter_task_title)
@@ -41,6 +40,8 @@ public class AddTaskActivity extends AppCompatActivity {
     List<RadioButton> radioButtons;
     @BindView(R.id.task_time_picker)
     TimePicker taskTimePicker;
+    private final String TASK_BUNDLE = "task_bundle";
+    private final String TASK_LABEL = "task";
     private final String LOG_TAG = AddTaskActivity.class.getSimpleName();
     private RadioButton priorityRadioButton;
     private TaskViewModel viewModel;
@@ -52,12 +53,16 @@ public class AddTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_task);
         ButterKnife.bind(this);
         setupOnClickRadioListener();
+        //Grab the Intent that started the activity
         Intent intent = getIntent();
         if (intent.getExtras() != null){
-            Bundle bundle = intent.getExtras().getBundle("BUNDLE");
+            //If the bundle is not null
+            //That means the user wants to Edit/Delete this task
+            Bundle bundle = intent.getExtras().getBundle(TASK_BUNDLE);
             if (bundle != null) {
                 setTitle("Edit Task");
-                currentTask = bundle.getParcelable("TASK");
+                //Retrieve the Task from the Bundle and populate the TextFields
+                currentTask = bundle.getParcelable(TASK_LABEL);
                 Log.v(LOG_TAG, mTaskTitle.toString());
                 mTaskTitle.setText(currentTask.getTitle());
                 mTaskDescription.setText(currentTask.getDescription());
@@ -68,44 +73,6 @@ public class AddTaskActivity extends AppCompatActivity {
         }
 
         viewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add_menu, menu);
-        if (currentTask == null){
-            menu.findItem(R.id.action_delete).setVisible(false);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        switch (id){
-            case R.id.action_save:
-                if (currentTask == null) {
-                    addTask();
-                } else {
-                    updateTask();
-                }
-                return true;
-            case R.id.action_delete:
-                if (currentTask != null) {
-                    deleteTask();
-                    finish();
-                }
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void setupOnClickRadioListener(){
@@ -121,6 +88,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private void addTask(){
         String title = mTaskTitle.getText().toString();
         String description = mTaskDescription.getText().toString();
+        //Check if the title or description fields are empty
         checkIfTitleOrDescriptionIsEmpty(title, description);
         String priority = "";
         if (priorityRadioButton != null){
@@ -130,26 +98,25 @@ public class AddTaskActivity extends AppCompatActivity {
             return;
         }
         Task task = new Task(title, description, priority, getTimeFromPicker());
-        isRadioButtonChecked();
         viewModel.insert(task);
-        Toast.makeText(this, "Task has been added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.toast_added_task), Toast.LENGTH_SHORT).show();
         finish();
     }
 
     private void updateTask(){
         String title = mTaskTitle.getText().toString();
         String description = mTaskDescription.getText().toString();
-        //Check if the title and description fields are empty
+        //Checks if the title and description fields are empty
         checkIfTitleOrDescriptionIsEmpty(title, description);
         Task task = new Task(title, description, priorityRadioButton.getText().toString(), getTimeFromPicker());
         task.setId(currentTask.getId());
-        Toast.makeText(this, "Task has been updated", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.toast_updated_task), Toast.LENGTH_SHORT).show();
         finish();
         viewModel.update(task);
     }
 
     private void deleteTask(){
-        Toast.makeText(this, "Task has been deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.toast_deleted_task), Toast.LENGTH_SHORT).show();
         viewModel.delete(currentTask);
     }
 
@@ -162,13 +129,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(description)){
             mTaskDescription.setError("A description is required");
-        }
-    }
-
-    private void isRadioButtonChecked(){
-        if (priorityRadioButton.getId() <= 0){
-            radioButtons.get(2).setError("A priority must be chosen");
-            Toast.makeText(this, "You must choose a priority", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -218,6 +178,44 @@ public class AddTaskActivity extends AppCompatActivity {
                 radioButtons.get(2).setChecked(true);
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.add_menu, menu);
+        if (currentTask == null) {
+            menu.findItem(R.id.action_delete).setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id) {
+            case R.id.action_save:
+                if (currentTask == null) {
+                    addTask();
+                } else {
+                    updateTask();
+                }
+                return true;
+            case R.id.action_delete:
+                if (currentTask != null) {
+                    deleteTask();
+                    finish();
+                }
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -5,10 +5,6 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +15,8 @@ import com.onramp.android.takehome.model.Task;
 import com.onramp.android.takehome.view.Fragments.TaskFragment;
 import com.onramp.android.takehome.viewmodel.TaskViewModel;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -35,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
     ViewPager mViewPager;
     @BindView(R.id.tabs)
     TabLayout tabLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private TaskViewModel taskViewModel;
     private String CHANNEL_ID = "1";
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         ButterKnife.bind(this);
         createNotificationChannel();
         setSupportActionBar(toolbar);
@@ -93,16 +93,20 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
 
     @Override
     public void onListFragmentInteraction(Task item) {
+        final String TASK_BUNDLE = "task_bundle";
+        final String TASK_LABEL = "task";
         Bundle viewTaskExtras = new Bundle();
         Intent viewTaskActivity = new Intent(MainActivity.this, AddTaskActivity.class);
-        viewTaskExtras.putParcelable("TASK", item);
-        viewTaskActivity.putExtra("BUNDLE", viewTaskExtras);
+        viewTaskExtras.putParcelable(TASK_LABEL, item);
+        viewTaskActivity.putExtra(TASK_BUNDLE, viewTaskExtras);
         startActivity(viewTaskActivity);
         Log.v(LOG_TAG, item.getTitle());
         Log.v(LOG_TAG, "Item ID: " + item.getId());
     }
 
 
+    //Create a Notification Channel
+    //Without this, we are unable to send Notifications
     private void createNotificationChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.notification_channel);

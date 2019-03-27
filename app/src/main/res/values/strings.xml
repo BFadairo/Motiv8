@@ -3,11 +3,6 @@
     <string name="title_activity_task">Add a Task</string>
     <string name="title_activity_quote">Add a quote</string>
 
-    <!-- Strings related to settings -->
-    <string name="action_settings">Settings</string>
-    <string name="action_delete_tasks">Delete All Tasks</string>
-    <string name="action_delete">Delete Task</string>
-
     <!-- Bottom Navigation Bar Titles -->
     <string name="title_home">Timer</string>
     <string name="title_tasks">Tasks</string>
@@ -15,30 +10,39 @@
 
     <!-- Button Text -->
     <string name="add_button_text">Add</string>
+    <string name="start_timer_button">Start Timer</string>
+
+    <!-- Hint Strings -->
+    <string name="task_hint_title">Math 1148</string>
+    <string name="task_hint_description">Class on Fridays</string>
+    <string name="task_priority_hint">Low</string>
+    <string name="task_time_hint">10:15 pm</string>
+    <string name="default_time_hint">00:00</string>
 
     <!-- Strings related to Notifications -->
     <string name="notification_channel">Quote Channel</string>
     <string name="notification_channel_description">Used for Quote Notifications</string>
 
-    <!-- Text for adding a new task -->
+    <!-- Strings for Task Related changes/additions -->
     <string name="task_title">Title</string>
     <string name="enter_task_title">Enter Task Title</string>
     <string name="task_description">Description</string>
     <string name="enter_task_description">Enter Task Description</string>
     <string name="task_priority">Priority</string>
+    <string name="toast_added_task">Task has been added</string>
+    <string name="toast_updated_task">Task has been updated</string>
+    <string name="toast_deleted_task">Task has been deleted</string>
 
     <!-- Strings related to task priorities -->
     <string name="low_priority">Low</string>
     <string name="medium_priority">Medium</string>
     <string name="high_priority">High</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
+    <string name="title_activity_settings">Settings</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_delete_tasks">Delete All Tasks</string>
+    <string name="action_delete">Delete Task</string>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
@@ -120,8 +124,6 @@
     </string-array>
 
     <string-array name="multi_select_list_preference_default_value" />
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>

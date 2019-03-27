@@ -16,7 +16,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.onramp.android.takehome.R;
-import com.onramp.android.takehome.services.MyAlarmReceiver;
 import com.onramp.android.takehome.services.MyTaskService;
 
 import java.text.ParseException;
@@ -24,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -117,37 +117,23 @@ public class TimerFragment extends Fragment {
     }
 
     private void calculateTime(int hour, int minute) {
-        int hourDifference;
-        int minDifference;
         long currentTime = System.currentTimeMillis();
-        long diffTime = 0;
+        long timeDifferenceInMilliSeconds = 0;
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(currentTime);
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
-        diffTime = calendar.getTimeInMillis() - currentTime;
-        desiredTimeInMillis = diffTime;
-        Log.v(LOG_TAG, "Time Difference in Millis: " + diffTime);
-
-        /*if (hour > currentHour){
-            hourDifference = hour - currentHour;
+        timeDifferenceInMilliSeconds = calendar.getTimeInMillis() - currentTime;
+        if (timeDifferenceInMilliSeconds > 0) {
+            desiredTimeInMillis = timeDifferenceInMilliSeconds;
         } else {
-            hourDifference = currentHour - hour;
+            desiredTimeInMillis = timeDifferenceInMilliSeconds + 86400000;
         }
+        Log.v(LOG_TAG, "Time Difference in Millis: " + timeDifferenceInMilliSeconds);
 
-        if (minute > currentMin) {
-            minDifference = minute - currentMin;
-        } else {
-            minDifference = currentMin - minute;
-        }*/
-
-        //Log.v(LOG_TAG, "Hour String: " + hourDifference);
-        //Log.v(LOG_TAG, "Minute String: " + minDifference);
-        //timeDifferenceHours.setText(String.valueOf(hourDifference).trim());
-        //timeDifferenceMins.setText(String.valueOf(minDifference).trim());
-        timeDifferenceHours.setText(String.format(Locale.US, "%02d:%02d", diffTime / hoursInMilis
-                , (diffTime % hoursInMilis) / minutesInMilis));
+        timeDifferenceHours.setText(String.format(Locale.US, "%02d:%02d", timeDifferenceInMilliSeconds / hoursInMilis
+                , (timeDifferenceInMilliSeconds % hoursInMilis) / minutesInMilis));
     }
 
     private void startTimer(long timeDiff) {
@@ -173,12 +159,12 @@ public class TimerFragment extends Fragment {
     }
 
     private void updateTextViewWithTimer() {
-        int minutes = (int) (desiredTimeInMillis / 1000) / 60;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(desiredTimeInMillis) - TimeUnit.HOURS.toMinutes
+                (TimeUnit.MILLISECONDS.toHours(desiredTimeInMillis));
         int seconds = (int) (desiredTimeInMillis / 1000) % 60;
         int hours = (int) (desiredTimeInMillis / hoursInMilis);
 
         String time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-
         timeDifferenceHours.setText(time);
     }
 
