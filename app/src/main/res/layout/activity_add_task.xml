@@ -40,6 +40,7 @@
                 android:inputType="text|textCapSentences"
                 android:hint="@string/enter_task_title"
                 android:singleLine="true"
+                android:autofillHints="title"
                 tools:hint="@string/enter_task_title" />
 
             <TextView
@@ -57,6 +58,7 @@
                 android:layout_below="@id/description_label"
                 android:inputType="text|textMultiLine|textCapSentences"
                 android:hint="@string/enter_task_description"
+                android:autofillHints="description"
                 tools:hint="@string/enter_task_description" />
 
 

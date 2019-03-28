@@ -16,12 +16,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.onramp.android.takehome.R;
+import com.onramp.android.takehome.services.MyAlarmReceiver;
 import com.onramp.android.takehome.services.MyTaskService;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -45,9 +43,8 @@ public class TimerFragment extends Fragment {
     private static final int minutesInMilis = 60000;
     private long desiredTimeInMillis;
     private Intent serviceIntent;
+    private MyAlarmReceiver alarmReceiver;
     private final String STOP_ACTION = "com.onramp.android.takehome.STOP_ALARM";
-
-    int currentHour, currentMin;
 
     public static TimerFragment newInstance() {
         return new TimerFragment();
@@ -58,7 +55,6 @@ public class TimerFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.timer_fragment, container, false);
         ButterKnife.bind(this, rootView);
-        getTheCurrentTime();
         grabTimePickerChoice();
         setupTimerButton();
 
@@ -75,10 +71,8 @@ public class TimerFragment extends Fragment {
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                Log.v(LOG_TAG, "Current Time: " + currentHour + ":" + currentMin);
+                //Calculate the current time difference
                 calculateTime(i, i1);
-                Log.v(LOG_TAG, "First int : " + i);
-                Log.v(LOG_TAG, "Second int : " + i1);
                 //Stops the timer if the user changes the time
                 if (countDownTimer != null) {
                     stopTimer();
@@ -88,24 +82,9 @@ public class TimerFragment extends Fragment {
         });
     }
 
-    public void getTheCurrentTime() {
-        String currentDate = Calendar.getInstance().getTime().toString();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM d k:mm:ss z yyyy");
-        SimpleDateFormat wantedFormated = new SimpleDateFormat("h:mm a");
-        Date date;
-        try {
-            date = simpleDateFormat.parse(currentDate);
-            Log.v(LOG_TAG, "This is the date: " + date.toString());
-            String formattedTime = wantedFormated.format(date);
-            Log.v(LOG_TAG, "This is the date: " + wantedFormated.format(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void setupTimerButton() {
-        currentHour = timePicker.getHour();
-        currentMin = timePicker.getMinute();
+        int currentHour = timePicker.getHour();
+        int currentMin = timePicker.getMinute();
         timerStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +98,7 @@ public class TimerFragment extends Fragment {
 
     private void calculateTime(int hour, int minute) {
         long currentTime = System.currentTimeMillis();
-        long timeDifferenceInMilliSeconds = 0;
+        long timeDifferenceInMilliSeconds;
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(currentTime);
@@ -171,6 +150,5 @@ public class TimerFragment extends Fragment {
         String time = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
         timeDifferenceHours.setText(time);
     }
-
 
 }

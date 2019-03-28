@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.onramp.android.takehome.R;
 import com.onramp.android.takehome.data.Retrofit.GetQuoteData;
@@ -35,19 +34,18 @@ public class MyAlarmReceiver extends BroadcastReceiver {
 
     private final String LOG_TAG = MyAlarmReceiver.class.getSimpleName();
     private Context mContext;
-    private final String CHANNEL_ID = "1";
     private Quote quote;
     private String quoteCategory;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
+        // This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast.
         mContext = context;
         //get Shared Preferences category value
         receiveCategoryFromSharedPreferences();
+        //Make an API request to fetch the quote
         fetchQuote();
-        Toast.makeText(context, "Alarm Repeat", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -76,26 +74,6 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         });
     }
 
-    private static class PicassoAsyncTask extends AsyncTask<Quote, Void, Bitmap> {
-        private Quote quote;
-
-        private PicassoAsyncTask(Quote quote) {
-            this.quote = quote;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Quote... quotes) {
-            Bitmap picassoImage = null;
-            try {
-                picassoImage = Picasso.get().load(quote.getQuoteLink()).resize(550, 500).get();
-                //picassoImage = resizeBitmap(picassoImage, 720);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return picassoImage;
-        }
-    }
-
     private void createNotification(Quote quote) {
         RemoteViews bigPictureView = new RemoteViews(mContext.getPackageName(),
                 R.layout.custom_notification);
@@ -120,6 +98,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         bigPictureView.setTextViewText(R.id.notification_title, quote.getTitle());
         NotificationManager notificationManager =
                 (NotificationManager) mContext.getSystemService(Service.NOTIFICATION_SERVICE);
+        String CHANNEL_ID = "1";
         Notification notification = new Notification.Builder(mContext, CHANNEL_ID)
                 .setContentTitle(quote.getAuthor())
                 .setContentText(quote.getTitle())
@@ -127,10 +106,30 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 .setStyle(new Notification.BigPictureStyle()
                         .bigPicture(notificationBitmap))
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_add_black_48dp)
+                .setSmallIcon(R.drawable.ic_chat_bubble_black_24dp)
                 .build();
 
         notificationManager.notify(0, notification);
+    }
+
+    private static class PicassoAsyncTask extends AsyncTask<Quote, Void, Bitmap> {
+        private Quote quote;
+
+        private PicassoAsyncTask(Quote quote) {
+            this.quote = quote;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Quote... quotes) {
+            Bitmap picassoImage = null;
+            try {
+                picassoImage = Picasso.get().load(quote.getQuoteLink()).resize(550, 300).get();
+                //picassoImage = resizeBitmap(picassoImage, 720);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return picassoImage;
+        }
     }
 
     private void receiveCategoryFromSharedPreferences(){

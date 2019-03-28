@@ -17,14 +17,12 @@ public class MyTaskService extends Service{
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
     private String quoteFrequency;
-    private final int minutesInMilis = 60000;
 
     public MyTaskService() {
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.v(LOG_TAG, "We here");
         //Receive the quote frequency from SharedPreferences
         retrieveQuoteFrequencyFromSharedPreferences();
         setupRecurringNotifications();
@@ -48,6 +46,7 @@ public class MyTaskService extends Service{
     
     private void setupRecurringNotifications() {
         long frequencyInMillis = Long.parseLong(quoteFrequency);
+        int minutesInMilis = 60000;
         frequencyInMillis *= minutesInMilis;
         Log.v(LOG_TAG, "Frequency IN Millis: " + frequencyInMillis);
         alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);

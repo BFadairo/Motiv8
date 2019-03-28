@@ -65,6 +65,6 @@ The Settings Activity allows users to change their preferences of their desired 
     <li><a href="http://jakewharton.github.io/butterknife">Butterknife for View Binding</li></a>
 </ol>
 
-Motiv8 utilizes the MVVM architecture  to assist with seperating class responsibilities. Repositories are used to make database queries & updates, ViewModels retrieve this data and push it to the View.
+Motiv8 utilizes the MVVM architecture  to assist with separating class responsibilities. Repositories are used to make database queries & updates, ViewModels retrieve this data and push it to the View.
 
 ### The inspiration for this project is mostly due to my own journey of trying to achieve better time management skills as well as keeping myself motivated. I believe anyone is capable of doing what they want, they just need that extra pat on the back :). Enjoy, feedback is welcomed!

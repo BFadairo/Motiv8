@@ -26,9 +26,6 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    //@BindView(R.id.navigation)
-    //BottomNavigationView navigation;
-    private SectionsPageAdapter mSectionsPagerAdapter;
     @BindView(R.id.container)
     ViewPager mViewPager;
     @BindView(R.id.tabs)
@@ -36,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private TaskViewModel taskViewModel;
-    private String CHANNEL_ID = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +50,9 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
     private void setupViewPager(){
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+        //@BindView(R.id.navigation)
+        //BottomNavigationView navigation;
+        SectionsPageAdapter mSectionsPagerAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -112,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements TaskFragment.OnLi
             CharSequence name = getString(R.string.notification_channel);
             String description = getString(R.string.notification_channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            String CHANNEL_ID = "1";
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance

@@ -16,13 +16,11 @@
         android:usesCleartextTraffic="true">
         <receiver
             android:name=".services.MyAlarmReceiver"
-            android:enabled="true"
-            android:exported="true"/>
+            android:enabled="true" />
 
         <service
             android:name=".services.MyTaskService"
-            android:enabled="true"
-            android:exported="true" />
+            android:enabled="true" />
 
         <activity
             android:name=".view.SettingsActivity"

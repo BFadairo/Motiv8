@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.onramp.android.takehome.R;
 import com.onramp.android.takehome.model.Task;
 import com.onramp.android.takehome.view.Fragments.TaskFragment.OnListFragmentInteractionListener;
-import com.onramp.android.takehome.view.Fragments.dummy.DummyContent.DummyItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Task} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
@@ -48,10 +46,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         holder.mDescriptionView.setText(holder.mItem.getDescription());
         holder.mPriorityView.setText(holder.mItem.getPriority());
         holder.mTimeView.setText(holder.mItem.getTime());
-        switch (holder.mItem.getPriority()){
-            case "High": holder.mPriorityView.setTextColor(mContext.getColor(R.color.high_priorty)); break;
-            case "Medium": holder.mPriorityView.setTextColor(mContext.getColor(R.color.medium_priorty)); break;
-            case "Low": holder.mPriorityView.setTextColor(mContext.getColor(R.color.low_priority)); break;
+        switch (holder.mItem.getPriority()) {
+            case "High":
+                holder.mPriorityView.setTextColor(mContext.getColor(R.color.high_priority));
+                break;
+            case "Medium":
+                holder.mPriorityView.setTextColor(mContext.getColor(R.color.medium_priority));
+                break;
+            case "Low":
+                holder.mPriorityView.setTextColor(mContext.getColor(R.color.low_priority));
+                break;
         }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +70,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         });
     }
 
-    public void setTasks(List<Task> tasks){
+    public void setTasks(List<Task> tasks) {
         this.mTasks = tasks;
         notifyDataSetChanged();
     }

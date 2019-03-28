@@ -44,7 +44,6 @@ public class TaskFragment extends Fragment {
     RecyclerView recyclerView;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    private TaskViewModel taskViewModel;
     private TaskAdapter mAdapter;
 
     /**
@@ -58,7 +57,7 @@ public class TaskFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        taskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
+        TaskViewModel taskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
         taskViewModel.getAllTasks().observe(getActivity(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {

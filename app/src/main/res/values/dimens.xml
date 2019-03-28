@@ -12,6 +12,6 @@
     <dimen name="card_elevation">8dp</dimen>
     <dimen name="fab_elevation">8dp</dimen>
 
-    <!-- Dimens for text sizez -->
+    <!-- Dimens for text sizes -->
     <dimen name="time_text_size">30sp</dimen>
 </resources>

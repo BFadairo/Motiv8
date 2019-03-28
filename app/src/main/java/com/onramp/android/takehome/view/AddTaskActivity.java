@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
@@ -40,8 +41,6 @@ public class AddTaskActivity extends AppCompatActivity {
     List<RadioButton> radioButtons;
     @BindView(R.id.task_time_picker)
     TimePicker taskTimePicker;
-    private final String TASK_BUNDLE = "task_bundle";
-    private final String TASK_LABEL = "task";
     private final String LOG_TAG = AddTaskActivity.class.getSimpleName();
     private RadioButton priorityRadioButton;
     private TaskViewModel viewModel;
@@ -58,10 +57,12 @@ public class AddTaskActivity extends AppCompatActivity {
         if (intent.getExtras() != null){
             //If the bundle is not null
             //That means the user wants to Edit/Delete this task
+            String TASK_BUNDLE = "task_bundle";
             Bundle bundle = intent.getExtras().getBundle(TASK_BUNDLE);
             if (bundle != null) {
                 setTitle("Edit Task");
                 //Retrieve the Task from the Bundle and populate the TextFields
+                String TASK_LABEL = "task";
                 currentTask = bundle.getParcelable(TASK_LABEL);
                 Log.v(LOG_TAG, mTaskTitle.toString());
                 mTaskTitle.setText(currentTask.getTitle());
@@ -90,7 +91,7 @@ public class AddTaskActivity extends AppCompatActivity {
         String description = mTaskDescription.getText().toString();
         //Check if the title or description fields are empty
         checkIfTitleOrDescriptionIsEmpty(title, description);
-        String priority = "";
+        String priority;
         if (priorityRadioButton != null){
             priority = priorityRadioButton.getText().toString();
         } else {
@@ -136,11 +137,11 @@ public class AddTaskActivity extends AppCompatActivity {
         int hour = taskTimePicker.getHour();
         int mins = taskTimePicker.getMinute();
         String formattedTime = String.valueOf(hour) + ":" + String.valueOf(mins);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm", Locale.getDefault());
         Date date;
         try {
             date = simpleDateFormat.parse(formattedTime);
-            formattedTime = new SimpleDateFormat("h:mm a").format(date);
+            formattedTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(date);
         } catch (ParseException e){
             e.printStackTrace();
         }
@@ -150,12 +151,12 @@ public class AddTaskActivity extends AppCompatActivity {
     private void setTimePickerHands(){
         String retrievedTime = currentTask.getTime();
         Log.v(LOG_TAG, "Retrieved Time: " + retrievedTime);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
         Date date;
         try {
             //Sure there's a better way to do this
             date = simpleDateFormat.parse(retrievedTime);
-            retrievedTime = new SimpleDateFormat("HH:mm").format(date);
+            retrievedTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(date);
             String[] hourAndMinutes = retrievedTime.split(":");
             taskTimePicker.setHour(Integer.parseInt(hourAndMinutes[0]));
             taskTimePicker.setMinute(Integer.parseInt(hourAndMinutes[1]));
