@@ -96,4 +96,4 @@ The TaskViewModel calls the associated database operation from the Task Reposito
 ### View
 The Timer Fragment receives the List of tasks from the ViewModel and populates the RecyclerView. The View allows users to Add, Delete, or Update their tasks. Once one of these actions is taken, the associated operation is called in the ViewModel.
 
-### The inspiration for this project is mostly due to my own journey of trying to achieve better time management skills as well as keeping myself motivated. I believe anyone is capable of doing what they want, they just need that extra push :). Hopefully this can serve as just that! Enjoy, feedback is welcomed!
+### The inspiration for this project mostly stems from my own journey and struggles with time management as well as keeping myself motivated. I believe anything is within the realm of reach, we just need some motivation to get there. Hopefully this can serve as just that! Enjoy :), feedback is welcomed!
