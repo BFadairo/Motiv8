@@ -16,8 +16,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.onramp.android.takehome.R;
-import com.onramp.android.takehome.services.MyAlarmReceiver;
-import com.onramp.android.takehome.services.MyTaskService;
+import com.onramp.android.takehome.services.AlarmReceiver;
+import com.onramp.android.takehome.services.NotificationService;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -43,7 +43,7 @@ public class TimerFragment extends Fragment {
     private static final int minutesInMilis = 60000;
     private long desiredTimeInMillis;
     private Intent serviceIntent;
-    private MyAlarmReceiver alarmReceiver;
+    private AlarmReceiver alarmReceiver;
     private final String STOP_ACTION = "com.onramp.android.takehome.STOP_ALARM";
 
     public static TimerFragment newInstance() {
@@ -90,7 +90,7 @@ public class TimerFragment extends Fragment {
             public void onClick(View view) {
                 startTimer(desiredTimeInMillis);
                 Toast.makeText(getContext(), "GO GO GO!", Toast.LENGTH_SHORT).show();
-                serviceIntent = new Intent(getActivity(), MyTaskService.class);
+                serviceIntent = new Intent(getActivity(), NotificationService.class);
                 getActivity().startService(serviceIntent);
             }
         });

@@ -15,11 +15,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <receiver
-            android:name=".services.MyAlarmReceiver"
+            android:name=".services.AlarmReceiver"
             android:enabled="true" />
 
         <service
-            android:name=".services.MyTaskService"
+            android:name=".services.NotificationService"
             android:enabled="true" />
 
         <activity

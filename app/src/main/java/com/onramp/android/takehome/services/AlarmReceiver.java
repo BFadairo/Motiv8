@@ -30,9 +30,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
-public class MyAlarmReceiver extends BroadcastReceiver {
+public class AlarmReceiver extends BroadcastReceiver {
 
-    private final String LOG_TAG = MyAlarmReceiver.class.getSimpleName();
+    private final String LOG_TAG = AlarmReceiver.class.getSimpleName();
     private Context mContext;
     private Quote quote;
     private String quoteCategory;

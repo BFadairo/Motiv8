@@ -11,14 +11,14 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class MyTaskService extends Service{
+public class NotificationService extends Service {
 
-    private final String LOG_TAG = MyTaskService.class.getSimpleName();
+    private final String LOG_TAG = NotificationService.class.getSimpleName();
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
     private String quoteFrequency;
 
-    public MyTaskService() {
+    public NotificationService() {
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MyTaskService extends Service{
         frequencyInMillis *= minutesInMilis;
         Log.v(LOG_TAG, "Frequency IN Millis: " + frequencyInMillis);
         alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, MyAlarmReceiver.class);
+        Intent intent = new Intent(this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         Log.v(LOG_TAG, "Starting Broadcast Receiver");
 

@@ -53,8 +53,8 @@ The Settings Activity allows users to change their preferences of their desired 
 
 #### Services
 <ol>
-    <li>MyTaskService</li>
-    <li>MyAlarmReceiver</li>
+    <li>NotificationService</li>
+    <li>AlarmReceiver</li>
 </ol>
 
 #### Other Components/Libraries
