@@ -54,6 +54,7 @@ public class MyTaskService extends Service{
         Intent intent = new Intent(this, MyAlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         Log.v(LOG_TAG, "Starting Broadcast Receiver");
+
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + frequencyInMillis,
                 frequencyInMillis, pendingIntent);
     }

@@ -79,6 +79,7 @@ public class TimerFragment extends Fragment {
                 calculateTime(i, i1);
                 Log.v(LOG_TAG, "First int : " + i);
                 Log.v(LOG_TAG, "Second int : " + i1);
+                //Stops the timer if the user changes the time
                 if (countDownTimer != null) {
                     stopTimer();
                     getActivity().stopService(serviceIntent);
@@ -130,10 +131,11 @@ public class TimerFragment extends Fragment {
         } else {
             desiredTimeInMillis = timeDifferenceInMilliSeconds + 86400000;
         }
+
         Log.v(LOG_TAG, "Time Difference in Millis: " + timeDifferenceInMilliSeconds);
 
-        timeDifferenceHours.setText(String.format(Locale.US, "%02d:%02d", timeDifferenceInMilliSeconds / hoursInMilis
-                , (timeDifferenceInMilliSeconds % hoursInMilis) / minutesInMilis));
+        timeDifferenceHours.setText(String.format(Locale.US, "%02d:%02d", desiredTimeInMillis / hoursInMilis
+                , (desiredTimeInMillis % hoursInMilis) / minutesInMilis));
     }
 
     private void startTimer(long timeDiff) {
@@ -149,7 +151,9 @@ public class TimerFragment extends Fragment {
             public void onFinish() {
                 Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(VibrationEffect.createOneShot(1000, 1));
-                getActivity().stopService(serviceIntent);
+                if (serviceIntent != null) {
+                    getActivity().stopService(serviceIntent);
+                }
             }
         }.start();
     }
