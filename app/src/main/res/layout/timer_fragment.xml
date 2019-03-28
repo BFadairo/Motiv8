@@ -21,31 +21,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/start_time_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start_timer_button"
-            app:layout_constraintLeft_toLeftOf="@id/time_picker"
-            app:layout_constraintRight_toRightOf="@id/time_picker"
-            app:layout_constraintTop_toBottomOf="@id/time_picker" />
-
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintLeft_toRightOf="@id/start_time_button"
-            app:layout_constraintRight_toLeftOf="@id/start_time_button"
-            app:layout_constraintTop_toBottomOf="@id/start_time_button">
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toRightOf="@id/time_picker"
+            app:layout_constraintRight_toLeftOf="@id/time_picker"
+            app:layout_constraintTop_toBottomOf="@id/time_picker">
+
+            <Button
+                android:id="@+id/start_time_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_timer_button" />
 
             <TextView
                 android:id="@+id/time_difference_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:hint="@string/default_time_hint"
                 android:textSize="@dimen/time_text_size"
                 android:textStyle="bold" />
+
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

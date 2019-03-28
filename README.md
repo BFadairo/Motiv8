@@ -65,6 +65,35 @@ The Settings Activity allows users to change their preferences of their desired 
     <li><a href="http://jakewharton.github.io/butterknife">Butterknife for View Binding</li></a>
 </ol>
 
-Motiv8 utilizes the MVVM architecture  to assist with separating class responsibilities. Repositories are used to make database queries & updates, ViewModels retrieve this data and push it to the View.
+## Architecture
+Motiv8 utilizes the MVVM architecture  to assist with the seperation of class responsibilities.
 
-### The inspiration for this project is mostly due to my own journey of trying to achieve better time management skills as well as keeping myself motivated. I believe anyone is capable of doing what they want, they just need that extra pat on the back :). Enjoy, feedback is welcomed!
+### Model
+The data is represented by two classes, Task and Quote. A Task repository was created to hold the database operations for Adding, Deleting, & Updating. The fields for each are as follows
+
+### Task
+<ul>
+    <li>ID (For room)</li>
+    <li>Title</li>
+    <li>Description</li>
+    <li>Priority</li>
+    <li>Time</li>
+</ul>
+
+### Quote
+Modeled after data retrieved from [Inspirational Quotes API](https://rapidapi.com/HealThruWords/api/universal-inspirational-quotes)
+
+Fields 
+<ul>
+    <li>Author</li>
+    <li>Title</li>
+    <li>Link to Quote (Loaded with Picasso)</li>
+</ul>
+
+### ViewModel
+The TaskViewModel calls the associated database operation from the Task Repository based on user interaction
+
+### View
+The Timer Fragment receives the List of tasks from the ViewModel and populates the RecyclerView. The View allows users to Add, Delete, or Update their tasks. Once one of these actions is taken, the associated operation is called in the ViewModel.
+
+### The inspiration for this project is mostly due to my own journey of trying to achieve better time management skills as well as keeping myself motivated. I believe anyone is capable of doing what they want, they just need that extra push :). Hopefully this can serve as just that! Enjoy, feedback is welcomed!
